@@ -1,0 +1,39 @@
+\documentclass[aspectratio=169,t]{beamer}
+\usetheme[workplace=fi]{MU}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{booktabs}
+\usepackage{bm}
+\usepackage{fontawesome}
+\usepackage{graphbox}
+\usepackage{minted}
+\usepackage{multicol}
+\usepackage{tikz}
+\usepackage[
+  backend=biber,
+  style=numeric,
+  sorting=none,
+  autolang=other,
+  sortlocale=auto,
+]{biblatex}
+\addbibresource{content.bib}
+
+% Some additional templates.
+\setbeamertemplate{section in toc}[sections numbered]
+\setbeamertemplate{subsection in toc}[subsections numbered]
+
+% Some additional macros.
+\def\abbr#1{\MakeUppercase{#1}}
+\let\term\emph
+\let\note\footnote
+\def\task#1{\textcolor{mubeamer@gray6}{\textbf{#1}}}
+\let\oldcite\cite\renewcommand\cite[2][]{\textmd{\oldcite[#1]{#2}}}
+\let\oldhref\href\def\href#1#2{\oldhref{#1}{\color{mubeamer@base}{#2}}}
+\makeatletter\newenvironment{listings}{% Remove vertical spacing between
+  \vskip\topsep                        % verbatim environments.
+  \let\FV@ListVSpace\relax\topsep=0pt \partopsep=0pt
+  % Use small font.
+  \footnotesize}{}\makeatother
+
+\input content
