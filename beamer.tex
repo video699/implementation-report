@@ -27,7 +27,10 @@
 \def\abbr#1{\MakeUppercase{#1}}
 \let\term\emph
 \let\note\footnote
+\def\bodytext#1{\textsf{\textmd{\color{black}{#1}}}}
 \def\task#1{\textcolor{mubeamer@gray6}{\textbf{#1}}}
+\def\library#1{\textcolor{mubeamer@base}{\textbf{#1}}}
+\long\def\titlenote#1{\smash{\textmd{#1}}}
 \let\oldcite\cite\renewcommand\cite[2][]{\textmd{\oldcite[#1]{#2}}}
 \let\oldhref\href\def\href#1#2{\oldhref{#1}{\color{mubeamer@base}{#2}}}
 \makeatletter\newenvironment{listings}{% Remove vertical spacing between

@@ -24,7 +24,7 @@
 
 \section{Introduction}
 
-\begin{frame}{Introduction \smash{\cite[sec.~1]{novotny18}}}
+\begin{frame}{Introduction \titlenote{\cite[sec.~1]{novotny18}}}
 \begin{itemize}
 \item<1-7> \abbr{FI} \abbr{MU} has been \alert{recording lectures} and publishing the
   recordings since 2014~\cite{hladkaliska03lectures}.
@@ -56,21 +56,21 @@
 
 \section{Tasks}
 
-\begin{frame}{Tasks \smash{\cite[sec.~2.2]{novotny18}}}
+\begin{frame}{Tasks \titlenote{\cite[sec.~2.2]{novotny18}}}
 \begin{itemize}
 \item<1-5> Given a set of \alert{lecture materials}, and a set of \alert{lecture
   recordings}, we need to produce a set of \alert{time segments} during which a
   recording displays a lecture material.
 \item<2-5> We break this high-level task into \alert{four elementary subtasks}:
 \begin{description}
-\item<2-5>[FRAMES] Detect \alert{significant video frames}, where lecture
-  materials transition.
-\item<3-5>[SCREENS] Detect \alert{projection screens} in a significant video
-  frame.
-\item<4-5>[RETRIEVAL] Find the \alert{nearest lecture materials} to a projection
-  screen.
-\item<5-5>[MATCHING] Decide if any nearest lecture materials \alert{matches}
-  the projection screen.
+\item<2-5>[\task{FRAMES}] Detect \alert{significant video frames}, where
+  lecture materials transition.
+\item<3-5>[\task{SCREENS}] Detect \alert{projection screens} in a significant
+  video frame.
+\item<4-5>[\task{RETRIEVAL}] Find the \alert{nearest lecture materials} to a
+  projection screen.
+\item<5-5>[\task{MATCHING}] Decide if any nearest lecture materials
+  \alert{matches} the projection screen.
 \end{description}
 \end{itemize}
 
@@ -85,7 +85,7 @@
 
 \section{Datasets}
 
-\begin{frame}{Datasets \smash{\cite[sec.~3]{novotny18}}}
+\begin{frame}{Datasets \titlenote{\cite[sec.~3]{novotny18}}}
 \begin{itemize}
 \item<1-11> We need a dataset~\cite{implementation-dataset} for
   \alert{supervised learning} to \alert{evaluate} our system:
@@ -166,7 +166,47 @@
 \end{frame}
 
 \section{System}
+
+\begin{frame}{System
+  \titlenote{\autocites[sec.~4]{novotny18}{research-system}{implementation-system}}}
+\begin{itemize}
+\item<1-7> We built our system~\cite{implementation-system} in \alert{Python 3.4}
+  using the following C++ libraries:
+\begin{description}
+\item<1-7>[\library{Annoy}] A library for \alert{approximate nearest neighbor
+  retrieval}.
+\item[\library{MuPDF}] An \alert{AGPL-licensed} library for \alert{rendering
+  \abbr{PDF}, and \abbr{XPS} documents}.
+\item<2-7>[\library{spatialindex}] A library for \alert{spatial indexing}.
+\item<3-7>[\library{GEOS}] A library for \alert{computational geometry}.
+\item<4-7>[\library{TensorFlow}] A library for \alert{building neural networks}.
+\end{description}
+\item<5-7> Here is how our system solves the individual \alert{subtasks}:
+\begin{description}
+\item<5-7>[\task{FRAMES}] We currently \alert{process all video frames}.
+\item<6-7>[\task{SCREENS}] We \alert{use our dataset}~\cite{implementation-screens}
+  to detect projection screens.  We implemented tracking of screen movements in
+  \library{spatialindex}, and \library{GEOS}.
+\item<7-7>[\task{RETRIEVAL}\bodytext{, }\task{MATCHING}] We implemented a supervised
+  method using \alert{Siamese convolutional neural networks}~\cite{bromley94}
+  in \library{Annoy}, and \library{TensorFlow}.
+\end{description}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\begin{figure}
+\begin{center}
+\includegraphics[width=1.47\textheight, height=0.9\textheight]{figs/diagram/bromley94}
+\end{center}
+\caption{A Siamese convolutional neural network. Source: \textcite{bromley94}}
+\end{figure}
+\end{frame}
+
 \section{Evaluation}
+\begin{frame}{Evaluation}
+\end{frame}
+
 \section{Results}
 \section{Conclusion}
 \section{Future Work}
