@@ -27,7 +27,7 @@
 \begin{frame}{Introduction \titlenote{\cite[sec.~1]{novotny18}}}
 \begin{itemize}
 \item<1-7> \abbr{FI} \abbr{MU} has been \alert{recording lectures} and publishing the
-  recordings since 2014~\cite{hladkaliska03lectures}.
+  recordings since 2004~\cite{hladkaliska03lectures}.
 \item<3-7> Two years of knowledge are archived with \alert{no indexing} and
   \alert{no metadata}.
 \item<4-7> \abbr{SPEECH@FIT} use \alert{speech recognition} to annotate videos at
@@ -60,7 +60,7 @@
 \begin{itemize}
 \item<1-5> Given a \alert{lecture recording} and a set of \alert{lecture materials},
   we need to produce a set of \alert{time segments} during which the recording
-  displays a lecture material. (\task{MAP})
+  displays a lecture material.
 \item<2-5> We break this high-level task into \alert{four elementary subtasks}:
 \begin{description}
 \item<2-5>[\task{FRAMES}] Detect \alert{significant video frames}, where
@@ -83,11 +83,50 @@
 \end{center}
 \end{frame}
 
+\section{System}
+
+\begin{frame}{System
+  \titlenote{\autocites[sec.~4]{novotny18}{research-system}{implementation-system}}}
+\begin{itemize}
+\item<1-6> We built our system~\cite{implementation-system} in \alert{Python 3.4}
+  using the following C++ libraries:
+\begin{description}
+\item<1-6>[\library{Annoy}] A library for \alert{approximate nearest neighbor
+  retrieval}.
+\item<1-6>[\library{spatialindex}] A library for \alert{spatial indexing}.
+\item<1-6>[\library{GEOS}] A library for \alert{computational geometry}.
+\item<2-6>[\library{MuPDF}] An \alert{AGPL-licensed} library for \alert{rendering
+  \abbr{PDF}, and \abbr{XPS} documents}.
+\item<3-6>[\library{TensorFlow}] A library for \alert{building neural networks}.
+\end{description}
+\item<4-6> Here is how our system solves the individual \alert{subtasks}:
+\begin{description}
+\item<4-6>[\task{FRAMES}] We currently \alert{process all video frames}.
+\item<5-6>[\task{SCREENS}] We \alert{use our dataset}~\cite{implementation-screens}
+  to detect projection screens.  We implemented tracking of screen movements in
+  \library{spatialindex}, and \library{GEOS}.
+\item<6-6>[\task{RETRIEVAL}\bodytext{, }\task{CLASSIFICATION}] We implemented a supervised
+  method using \alert{Siamese convolutional neural networks}~\cite{bromley94}
+  in \library{Annoy}, and \library{TensorFlow}.
+\end{description}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\begin{figure}
+\begin{center}
+\includegraphics[width=1.47\textheight, height=0.9\textheight]{figs/diagram/bromley94}
+\end{center}
+\vspace{-0.3cm}%
+\caption{A Siamese convolutional neural network. Source: \textcite{bromley94}}
+\end{figure}
+\end{frame}
+
 \section{Datasets}
 
 \begin{frame}{Datasets \titlenote{\cite[sec.~3]{novotny18}}}
 \begin{itemize}
-\item<1-11> We need a dataset~\cite{implementation-dataset} for
+\item<1-11> We need a dataset~\cite{implementation-videos} for
   \alert{supervised learning} to \alert{evaluate} our system:
 \begin{itemize}
 \item<1-11> We collected a random sample of \alert{17 lecture recordings} from 2010--2016.
@@ -165,48 +204,9 @@
 \end{center}
 \end{frame}
 
-\section{System}
-
-\begin{frame}{System
-  \titlenote{\autocites[sec.~4]{novotny18}{research-system}{implementation-system}}}
-\begin{itemize}
-\item<1-8> We built our system~\cite{implementation-system} in \alert{Python 3.4}
-  using the following C++ libraries:
-\begin{description}
-\item<1-8>[\library{Annoy}] A library for \alert{approximate nearest neighbor
-  retrieval}.
-\item<2-8>[\library{MuPDF}] An \alert{AGPL-licensed} library for \alert{rendering
-  \abbr{PDF}, and \abbr{XPS} documents}.
-\item<3-8>[\library{spatialindex}] A library for \alert{spatial indexing}.
-\item<4-8>[\library{GEOS}] A library for \alert{computational geometry}.
-\item<5-8>[\library{TensorFlow}] A library for \alert{building neural networks}.
-\end{description}
-\item<6-8> Here is how our system solves the individual \alert{subtasks}:
-\begin{description}
-\item<6-8>[\task{FRAMES}] We currently \alert{process all video frames}.
-\item<7-8>[\task{SCREENS}] We \alert{use our dataset}~\cite{implementation-screens}
-  to detect projection screens.  We implemented tracking of screen movements in
-  \library{spatialindex}, and \library{GEOS}.
-\item<8-8>[\task{RETRIEVAL}\bodytext{, }\task{CLASSIFICATION}] We implemented a supervised
-  method using \alert{Siamese convolutional neural networks}~\cite{bromley94}
-  in \library{Annoy}, and \library{TensorFlow}.
-\end{description}
-\end{itemize}
-\end{frame}
-
-\begin{frame}
-\begin{figure}
-\begin{center}
-\includegraphics[width=1.47\textheight, height=0.9\textheight]{figs/diagram/bromley94}
-\end{center}
-\vspace{-0.3cm}%
-\caption{A Siamese convolutional neural network. Source: \textcite{bromley94}}
-\end{figure}
-\end{frame}
-
 \section{Evaluation and Results}
 
-\begin{frame}{Evaluation and Results}
+\begin{frame}{Evaluation and Results \titlenote{\cite{siamese-cnn-evaluation}}}
 \begin{itemize}
 \item We estimated the system's \alert{performance} on \task{RETRIEVAL}, and
   \task{CLASSIFICATION}:
@@ -223,9 +223,89 @@
 \end{center}
 \end{frame}
 
-\section{Conclusion}
-\section{Future Work}
+\section{Conclusion and Future Work}
+
+\begin{frame}{Conclusion and Future Work}
+\begin{itemize}
+\item<1-7> In our project, we have accomplished the following:
+\begin{itemize}
+\item<1-7> We have developed a \alert{production-grade system} and \alert{two
+  datasets} and released them under open licenses.
+\item<2-7> We have proposed and evaluated a \alert{novel method} for content-based
+  image retrieval and image pair classification using \alert{modern digital
+  image processing techniques}.
+\end{itemize}
+\item<3-7> In the future, we will focus on the following:
+\begin{itemize}
+\item<3-7> Solving \task{FRAMES} is expected to \alert{improve the speed} of our system.
+\item<4-7> Solving \task{SCREENS} will \alert{automate projection screen detection}.
+\item<5-7> Removing \alert{uneven illumination}, \alert{noise}, and \alert{optical
+  distortion} from video frames is expected to \alert{improve the accuracy} of our system.
+\item<6-7> Optimizing \alert{hyper-parameters} is expected to \alert{improve
+  both speed and accuracy}.
+\item<7-7> We will deploy our system at \href{https://video.muni.cz/}{video.muni.cz}.
+\end{itemize}
+\end{itemize}
+\end{frame}
+
 \section{Acknowledgements}
+
+\begin{frame}{Acknowledgements I}
+\begin{itemize}
+\item<1-3> Computational resources \alert{hypnos} were kindly provided by
+  \alert{the Laboratory of Electronic and MultiMedia Applications}
+  (\alert{\abbr{LEMMA}}).
+\item<2-3> Access to pre-trained \abbr{VGG} convolutional neural networks was
+  kindly provided by
+  \alert{RNDr.\ David Novák},
+  \alert{Ph.D., RNDr.\ Michal Batko, Ph.D.}, and
+  \alert{Mgr.\ Michal Lukáč}
+  from \alert{the Laboratory of Data Intensive Systems and Applications}
+  (\alert{\abbr{DISA}}).
+\item<3-3> We would like to thank
+  \alert{Doc.\ RNDr.\ Petr Sojka, Ph.D.}, 
+  \alert{doc.\ RNDr.\ Petr Matula, Ph.D.},
+  \alert{RNDr.\ David Novák, Ph.D.}, and
+  \alert{doc.\ Ing.\ Vlad Popovici}, Ph.D.\ for their useful feedback.
+\end{itemize}
+
+\begin{center}%
+\only<1>{\vspace{-2.3cm}\includegraphics[width=0.3\textwidth]{figs/logo/lemma}}%
+\only<2>{\vspace{-2.2cm}\includegraphics[width=\textwidth]{figs/logo/disa}}%
+\only<3>{\vspace{6cm}}%
+\end{center}%
+\end{frame}
+
+\begin{frame}{Acknowledgements II}
+We would like to acknowledge the following lecturers, listed in no particular
+order, who kindly agreed to have their lecture recordings and lecture
+materials released in a public dataset. Their contribution to this work is
+gratefully acknowledged.
+
+\scriptsize
+\begin{multicols}{3}
+\begin{itemize}
+\item\alert{RNDr.\ Václav Brožek, Ph.D.},
+\item\alert{RNDr.\ Nikola Beneš, Ph.D.},
+\item\alert{doc.\ Mgr.\ Radek Pelánek, Ph.D.},
+\item\alert{prof.\ RNDr.\ Petr Hliněný, Ph.D.},
+\item\alert{doc.\ RNDr.\ Jan Bouda, Ph.D.},
+\item\alert{prof.\ RNDr.\ Jan Slovák, DrSc.},
+\item\alert{RNDr.\ Radek Ošlejšek, Ph.D.},
+\item\alert{doc.\ RNDr.\ Vlastislav Dohnal, Ph.D.},
+\item\alert{prof.\ RNDr.\ Luděk Matyska, CSc.},
+\item\alert{doc.\ RNDr.\ Eva Hladká, Ph.D.},
+\item\alert{prof.\ Ing.\ Jiří Sochor, CSc.},
+\item\alert{doc.\ RNDr.\ Petr Sojka, Ph.D.},
+\item\alert{Jeffrey Dean, Ph.D.},
+\item\alert{Bc.\ Jakub Hančin},
+\item\alert{RNDr.\ Jaroslav Pelikán, Ph.D.},
+\item\alert{RNDr.\ Jan Kasprzak, Ph.D.},
+\item\alert{doc.\ RNDr.\ Barbora Kozlíková, Ph.D.},
+\item\alert{Mgr.\ Petr Tobola, Ph.D.}
+\end{itemize}
+\end{multicols}
+\end{frame}
 
 \section{Bibliography}
 
