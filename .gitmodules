@@ -1,3 +1,6 @@
 [submodule "implementation-videos"]
 	path = implementation-videos
 	url = https://github.com/video699/implementation-videos.git
+[submodule "mubeamer"]
+	path = mubeamer
+	url = git@gitlab.ics.muni.cz:409729/mubeamer.git
